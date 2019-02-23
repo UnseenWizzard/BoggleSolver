@@ -38,22 +38,29 @@ public class BoggleBoard {
 	
 	private final List<Die> dice; 
 	private char[][] board;
+	private final int boardSize;
 	private final Random numberGenerator;
 
 	public BoggleBoard() {
+		this(4);
+	}
+
+	public BoggleBoard(int boardSize) {
 		dice = new ArrayList<>();
 		for (String faces : DIE_FACES) {
 			dice.add(new Die(faces));
 		}
-		board = new char[4][4];
+		this.boardSize = boardSize;
+		board = new char[boardSize][boardSize];
 		numberGenerator = new Random();
+		System.out.println(String.format("Constructing %d x %d BoggleBoard", boardSize, boardSize));
 		generateNewBoard();
 	}
 
 	public void generateNewBoard() {
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				board[i][j] = dice.get(4*i + j).roll();
+		for (int i = 0; i < boardSize; i++) {
+			for (int j = 0; j < boardSize; j++) {
+				board[i][j] = dice.get( (4*i + j) % 16).roll();
 			}
 		}
 	}
@@ -63,13 +70,17 @@ public class BoggleBoard {
 	}
 
 	public void printBoard() {
-		System.out.println("\n---------");
-		for (int i = 0; i < 4; i++) {
+		String rowSeperator = "\n-";
+		for (int i = 0; i < boardSize; i++) {
+			rowSeperator += "-";
+		}
+		System.out.println(rowSeperator);
+		for (int i = 0; i < boardSize; i++) {
 			System.out.print("|");
-			for (int j = 0; j < 4; j++) {
+			for (int j = 0; j < boardSize; j++) {
 				System.out.print(board[i][j]+"|");
 			}
-			System.out.println("\n---------");
+			System.out.println(rowSeperator);
 		}
 	}
 

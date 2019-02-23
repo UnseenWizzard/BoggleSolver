@@ -26,7 +26,7 @@ public class BoggleSolver {
 		}
 	}
 
-	public Collection<String> findAllWordsOnBoard(char[][] board) {
+	public Set<String> findAllWordsOnBoard(char[][] board) {
 		this.board = board;
 		Set<String> found = new HashSet<>();
 
